@@ -5,8 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "cryptography>=45.0.5",
     "dotenv>=0.9.9",
     "fastapi>=0.116.1",
+    "pymysql>=1.1.1",
+    "pytest>=8.4.1",
     "requests>=2.32.4",
+    "sq>=1.0a1",
+    "sqlalchemy>=2.0.42",
     "uvicorn>=0.35.0",
 ]

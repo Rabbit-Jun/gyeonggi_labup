@@ -12,8 +12,15 @@ SERVICE_KEY = os.getenv("SERVICE_KEY", "").strip()
 
 app = FastAPI()
 
-@app.get("/road-info")
-def road_info_handler(lae_id: str = "31010"):
+api_key=['getRoadInfoList','getRoadLinkInfoList',
+         'getRoadTrafficInfoList','getRoadLinkTrafficInfoList',
+         'getRoadLinkTrafficInfo','getRoadLinkCongestInfo',
+         'getIncidentInfo','getParkingPlaceInfoList',
+         'getParkingPlaceAvailabilityInfoList']
+
+
+@app.get("/getRoadInfoList")
+def getRoadInfoList_handler():
     if not API_URL or not SERVICE_KEY:
         raise HTTPException(status_code=500, detail="환경 변수(API_URL, SERVICE_KEY) 설정 안됨")
 
@@ -22,30 +29,28 @@ def road_info_handler(lae_id: str = "31010"):
     full_url = (
         f"{API_URL}?"
         f"serviceKey={encoded_key}&"
-        f"laeId={lae_id}&"
-        f"pageNo=1&"
-        f"numOfRows=10"
+        
     )
 
     try:
-        response = requests.get(full_url, timeout=10)
+        response = requests.get(full_url+api_key[0], timeout=10)
         response.raise_for_status()
 
-        # ✅ XML 파싱
+        # XML 파싱
         root = ET.fromstring(response.text)
         item_list = root.findall(".//itemList")
 
-        # ✅ 필요한 정보 추출
+        # 필요한 정보 추출
         result = []
         for item in item_list:
             result.append({
-                "주차장명": item.findtext("pkplcNm"),
-                "유형": item.findtext("pkplcTypeNm"),
-                "종류": item.findtext("pkplcDivNm"),
-                "주소": item.findtext("roadNmAddr"),
-                "전체면수": item.findtext("pklotCnt"),
-                "가용 주차구획 수": item.findtext("avblPklotCnt"),
-                "제공시간": item.findtext("ocrnDt")
+                "도로ID": item.findtext("routeId"),
+                "링크 ID": item.findtext("linkId"),
+                "교통량": item.findtext("vol"),
+                "여행시간": item.findtext("trvlTime"),
+                "구간 속도": item.findtext("spd"),
+                # "가용 주차구획 수": item.findtext("avblPklotCnt"),
+                # "제공시간": item.findtext("ocrnDt")
             })
 
         return {"count": len(result), "data": result}
