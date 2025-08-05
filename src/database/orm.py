@@ -1,19 +1,23 @@
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean
-from database.schema.request import CreateToDoRequest
+from pydantic import BaseModel, Field
+
 
 Base = declarative_base()  # SQLAlchemy의 선언적 베이스 클래스를 생성합니다. 이 클래스는 ORM 모델의 기본 클래스가 됩니다.
 
 
 class CommonBase(Base):
-    headerCd = Column(String(10)),
-    headerMsg = Column(String(100)),
-    resultCode = Column(String(10)),
+    __abstract__ = True  # 이 클래스는 추상 클래스로, 실제 테이블을 생성하지 않음
+
+    headerCd = Column(String(10))
+    headerMsg = Column(String(100))
+    resultCode = Column(String(10))
 
 class RoadInfoList(CommonBase):
     __tablename__ = "road_info_list"
 
-    routeId = Column(String(50), primary_key=True)  # 도로 ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    routeId = Column(String(50), unique=True)  # 도로 ID (고유하지만 primary key는 아님)
     roadRank = Column(String(20))  # 도로 등급
     routeTp = Column(String(20))  # 도로 종류
     routeNo = Column(String(20))  # 도로 번호
@@ -25,9 +29,10 @@ class RoadInfoList(CommonBase):
 class getRoadLinkInfoList(CommonBase):
     __tablename__ = "road_link_info_list"
 
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
     routeWay = Column(String(20))  # 도로 방향
     routeSeq = Column(Integer)  # 도로 순서
-    linkId = Column(String(50), primary_key=True)  # 링크 ID
+    linkId = Column(String(50), unique=True)  # 링크 ID (고유하지만 primary key는 아님)
     startNodeId = Column(String(50))  # 시작 노드 ID
     startNodeNm = Column(String(100))  # 시작 노드 이름
     endNodeId = Column(String(50))  # 끝 노드 ID
@@ -40,7 +45,8 @@ class getRoadLinkInfoList(CommonBase):
 class getRoadTrafficInfoList(CommonBase):
     __tablename__ = "road_traffic_info_list"
 
-    routeId = Column(String(50), primary_key=True)  # 도로 ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
     routeSeq = Column(Integer)  # 도로 순서
@@ -66,7 +72,8 @@ class getRoadTrafficInfoList(CommonBase):
 class getRoadLinkTrafficInfoList(CommonBase):
     __tablename__ = "road_link_traffic_info_list"
 
-    routeId = Column(String(50), primary_key=True)  # 도로 ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
     routeSeq = Column(Integer)  # 도로 순서
@@ -92,7 +99,8 @@ class getRoadLinkTrafficInfoList(CommonBase):
 class getRoadLinkTrafficInfo(CommonBase):
     __tablename__ = "road_link_traffic_info"
 
-    routeId = Column(String(50), primary_key=True)  # 도로 ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
     routeSeq = Column(Integer)  # 도로 순서
@@ -119,7 +127,8 @@ class getRoadLinkTrafficInfo(CommonBase):
 class getRoadLinkCongestInfo(CommonBase):
     __tablename__ = "road_link_congest_info"
 
-    routeId = Column(String(50), primary_key=True)  # 도로 ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
     routeSeq = Column(Integer)  # 도로 순서
@@ -142,7 +151,8 @@ class getRoadLinkCongestInfo(CommonBase):
 class getIncidentInfo(CommonBase):
     __tablename__ = "incident_info"
 
-    routeId = Column(String(50), primary_key=True)  # 도로 ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    routeId = Column(String(50))  # 도로 ID
     linkId = Column(String(50))  # 표준링크 ID
     spotId = Column(String(50))  # 지점 ID
     regSeq  = Column(Integer)  # 돌발상황 고유번호
