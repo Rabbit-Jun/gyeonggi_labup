@@ -6,13 +6,16 @@ from urllib.parse import quote_plus
 from sqlalchemy.orm import Session
 import xml.etree.ElementTree as ET
 
-from database.connection import get_db
+from database.connection import get_db, create_tables
 from database.repository import (
     insert_data, get_all_data, get_paginated_data, 
     get_road_traffic_info_by_route, get_parking_info_by_location
 )
 
 load_dotenv()
+
+# 애플리케이션 시작 시 테이블 생성
+create_tables()
 
 API_URL = os.getenv("API_URL", "").strip()
 SERVICE_KEY = os.getenv("SERVICE_KEY", "").strip()
