@@ -5,6 +5,7 @@ from datetime import datetime
 # 공통 베이스 응답 스키마
 class CommonBaseResponse(BaseModel):
     """공통 API 응답 헤더 정보"""
+    id: int = Field(..., description="고유 ID (auto-increment)")
     headerCd: str | None = Field(None, description="헤더 코드")
     headerMsg: str | None = Field(None, description="헤더 메시지")
     resultCode: str | None = Field(None, description="결과 코드")
@@ -25,13 +26,13 @@ class RoadInfoResponse(CommonBaseResponse):
 class RoadLinkInfoResponse(CommonBaseResponse):
     """도로 링크 정보 응답 스키마 - ORM getRoadLinkInfoList와 1:1 매칭"""
     routeWay: str | None = Field(None, description="도로 방향")
-    routeSeq: str | None = Field(None, description="도로 순서")
+    routeSeq: int | None = Field(None, description="도로 순서")
     linkId: str = Field(..., description="링크 ID")
     startNodeId: str | None = Field(None, description="시작 노드 ID")
     startNodeNm: str | None = Field(None, description="시작 노드 이름")
     endNodeId: str | None = Field(None, description="끝 노드 ID")
     endNodeNm: str | None = Field(None, description="끝 노드 이름")
-    linkLength: str | None = Field(None, description="링크 길이")
+    linkLength: int | None = Field(None, description="링크 길이")
 
 
 class RoadTrafficInfoResponse(CommonBaseResponse):
@@ -39,17 +40,17 @@ class RoadTrafficInfoResponse(CommonBaseResponse):
     routeId: str = Field(..., description="도로 ID")
     routeNm: str | None = Field(None, description="도로 이름")
     routeWay: str | None = Field(None, description="도로 방향")
-    routeSeq: str | None = Field(None, description="도로 순서")
+    routeSeq: int | None = Field(None, description="도로 순서")
     linkId: str | None = Field(None, description="링크 ID")
     startNodeId: str | None = Field(None, description="시작 노드 ID")
     startNodeNm: str | None = Field(None, description="시작 노드 이름")
     endNodeId: str | None = Field(None, description="끝 노드 ID")
     endNodeNm: str | None = Field(None, description="끝 노드 이름")
     collDate: str | None = Field(None, description="수집 날짜")
-    spd: str | None = Field(None, description="속도", ge=0)
-    vol: str | None = Field(None, description="교통량", ge=0)
-    trvlTime: str | None = Field(None, description="여행 시간", ge=0)
-    linkDelayTime: str | None = Field(None, description="링크 지연 시간", ge=0)
+    spd: int | None = Field(None, description="속도", ge=0)
+    vol: int | None = Field(None, description="교통량", ge=0)
+    trvlTime: int | None = Field(None, description="여행 시간", ge=0)
+    linkDelayTime: int | None = Field(None, description="링크 지연 시간", ge=0)
     congGrade: str | None = Field(None, description="혼잡 등급 (0:정보없음, 1:원활, 2:지체, 3:정체)")
 
 
@@ -58,16 +59,16 @@ class RoadLinkCongestInfoResponse(CommonBaseResponse):
     routeId: str = Field(..., description="도로 ID")
     routeNm: str | None = Field(None, description="도로 이름")
     routeWay: str | None = Field(None, description="도로 방향")
-    routeSeq: str | None = Field(None, description="도로 순서")
+    routeSeq: int | None = Field(None, description="도로 순서")
     linkId: str | None = Field(None, description="링크 ID")
     startNodeId: str | None = Field(None, description="시작 노드 ID")
     startNodeNm: str | None = Field(None, description="시작 노드 이름")
     endNodeId: str | None = Field(None, description="끝 노드 ID")
     endNodeNm: str | None = Field(None, description="끝 노드 이름")
     collDate: str | None = Field(None, description="수집 날짜")
-    spd: str | None = Field(None, description="속도", ge=0)
-    vol: str | None = Field(None, description="교통량", ge=0)
-    trvlTime: str | None = Field(None, description="여행 시간", ge=0)
+    spd: int | None = Field(None, description="속도", ge=0)
+    vol: int | None = Field(None, description="교통량", ge=0)
+    trvlTime: int | None = Field(None, description="여행 시간", ge=0)
 
 
 # 돌발상황 정보 응답 스키마
@@ -76,7 +77,7 @@ class IncidentInfoResponse(CommonBaseResponse):
     routeId: str = Field(..., description="도로 ID")
     linkId: str | None = Field(None, description="표준링크 ID")
     spotId: str | None = Field(None, description="지점 ID")
-    regSeq: str | None = Field(None, description="돌발상황 고유번호")
+    regSeq: int | None = Field(None, description="돌발상황 고유번호")
     confirmDate: str | None = Field(None, description="감지 시간")
     startDate: str | None = Field(None, description="시작 시간")
     estEndDate: str | None = Field(None, description="예상 종료 시간")
@@ -92,6 +93,7 @@ class IncidentInfoResponse(CommonBaseResponse):
 # 주차장 정보 연계 지자체ID 응답 스키마
 class AssociatedParkingPlaceInfoResponse(BaseModel):
     """연관 주차장 정보 응답 스키마"""
+    id: int = Field(..., description="고유 ID (auto-increment)")
     laeId: str = Field(..., description="지방자치단체ID")
     laeNm: str | None = Field(None, description="지방자치단체명")
     
@@ -139,8 +141,8 @@ class ParkingPlaceAvailabilityInfoResponse(CommonBaseResponse):
     laeNm: str | None = Field(None, description="지방자치단체명")
     pkplcId: str = Field(..., description="주차장ID")
     pkplcNm: str | None = Field(None, description="주차장명")
-    pklotCnt: str | None = Field(None, description="주차구획 수", ge=0)
-    avblPklotCnt: str | None = Field(None, description="가용 주차구획 수", ge=0)
+    pklotCnt: int | None = Field(None, description="주차구획 수", ge=0)
+    avblPklotCnt: int | None = Field(None, description="가용 주차구획 수", ge=0)
     ocrnDt: str | None = Field(None, description="제공시간")
 
 
@@ -148,9 +150,9 @@ class ParkingPlaceAvailabilityInfoResponse(CommonBaseResponse):
 class RoadInfoPageResponse(BaseModel):
     """도로 정보 페이지네이션 응답 컨테이너"""
     items: list[RoadInfoResponse] = Field(default_factory=list, description="도로 정보 목록")
-    total_count: str = Field(0, description="전체 항목 수")
-    page: str = Field(1, description="현재 페이지")
-    page_size: str = Field(10, description="페이지 크기")
+    total_count: int = Field(0, description="전체 항목 수")
+    page: int = Field(1, description="현재 페이지")
+    page_size: int = Field(10, description="페이지 크기")
     
     model_config = ConfigDict(from_attributes=True)
 
@@ -158,9 +160,9 @@ class RoadInfoPageResponse(BaseModel):
 class RoadTrafficInfoPageResponse(BaseModel):
     """도로 교통 정보 페이지네이션 응답 컨테이너"""
     items: list[RoadTrafficInfoResponse] = Field(default_factory=list, description="도로 교통 정보 목록")
-    total_count: str = Field(0, description="전체 항목 수")
-    page: str = Field(1, description="현재 페이지")
-    page_size: str = Field(10, description="페이지 크기")
+    total_count: int = Field(0, description="전체 항목 수")
+    page: int = Field(1, description="현재 페이지")
+    page_size: int = Field(10, description="페이지 크기")
     
     model_config = ConfigDict(from_attributes=True)
 
@@ -168,9 +170,9 @@ class RoadTrafficInfoPageResponse(BaseModel):
 class ParkingPlaceInfoPageResponse(BaseModel):
     """주차장 정보 페이지네이션 응답 컨테이너"""
     items: list[ParkingPlaceInfoResponse] = Field(default_factory=list, description="주차장 정보 목록")
-    total_count: str = Field(0, description="전체 항목 수")
-    page: str = Field(1, description="현재 페이지")
-    page_size: str = Field(10, description="페이지 크기")
+    total_count: int = Field(0, description="전체 항목 수")
+    page: int = Field(1, description="현재 페이지")
+    page_size: int = Field(10, description="페이지 크기")
     
     model_config = ConfigDict(from_attributes=True)
 
@@ -178,9 +180,9 @@ class ParkingPlaceInfoPageResponse(BaseModel):
 class IncidentInfoPageResponse(BaseModel):
     """돌발상황 정보 페이지네이션 응답 컨테이너"""
     items: list[IncidentInfoResponse] = Field(default_factory=list, description="돌발상황 정보 목록")
-    total_count: str = Field(0, description="전체 항목 수")
-    page: str = Field(1, description="현재 페이지")
-    page_size: str = Field(10, description="페이지 크기")
+    total_count: int = Field(0, description="전체 항목 수")
+    page: int = Field(1, description="현재 페이지")
+    page_size: int = Field(10, description="페이지 크기")
     
     model_config = ConfigDict(from_attributes=True)
 

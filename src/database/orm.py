@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, String, Boolean, Integer
 from pydantic import BaseModel, Field
 
 
@@ -31,13 +31,13 @@ class getRoadLinkInfoList(CommonBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
     routeWay = Column(String(20))  # 도로 방향
-    routeSeq = Column(Integer)  # 도로 순서
+    routeSeq = Column(String(20))  # 도로 순서
     linkId = Column(String(50), unique=True)  # 링크 ID (고유하지만 primary key는 아님)
     startNodeId = Column(String(50))  # 시작 노드 ID
     startNodeNm = Column(String(100))  # 시작 노드 이름
     endNodeId = Column(String(50))  # 끝 노드 ID
     endNodeNm = Column(String(100))  # 끝 노드 이름
-    linkLength = Column(Integer)  # 링크 길이
+    linkLength = Column(String(20))  # 링크 길이
 
     def __repr__(self):
         return f"<getRoadLinkInfoList(routeWay={self.routeWay}, routeSeq={self.routeSeq}, linkId={self.linkId}, startNodeId={self.startNodeId}, startNodeNm={self.startNodeNm}, endNodeId={self.endNodeId}, endNodeNm={self.endNodeNm}, linkLength={self.linkLength})>"
@@ -49,17 +49,17 @@ class getRoadTrafficInfoList(CommonBase):
     routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
-    routeSeq = Column(Integer)  # 도로 순서
+    routeSeq = Column(String(20))  # 도로 순서
     linkId = Column(String(50))  # 링크 ID
     startNodeId = Column(String(50))  # 시작 노드 ID
     startNodeNm = Column(String(100))  # 시작 노드 이름
     endNodeId = Column(String(50))  # 끝 노드 ID
     endNodeNm = Column(String(100))  # 끝 노드 이름
     collDate = Column(String(20))  # 수집 날짜
-    spd = Column(Integer)  # 속도
-    vol = Column(Integer)  # 교통량
-    trvlTime = Column(Integer)  # 여행 시간
-    linkDelayTime = Column(Integer)  # 링크 지연 시간
+    spd = Column(String(20))  # 속도
+    vol = Column(String(20))  # 교통량
+    trvlTime = Column(String(20))  # 여행 시간
+    linkDelayTime = Column(String(20))  # 링크 지연 시간
     congGrade = Column(String(20))  # 혼잡 등급
 
     def __repr__(self):
@@ -76,17 +76,17 @@ class getRoadLinkTrafficInfoList(CommonBase):
     routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
-    routeSeq = Column(Integer)  # 도로 순서
+    routeSeq = Column(String(20))  # 도로 순서
     linkId = Column(String(50))  # 링크 ID
     startNodeId = Column(String(50))  # 시작 노드 ID
     startNodeNm = Column(String(100))  # 시작 노드 이름
     endNodeId = Column(String(50))  # 끝 노드 ID
     endNodeNm = Column(String(100))  # 끝 노드 이름
     collDate = Column(String(20))  # 수집 날짜
-    spd = Column(Integer)  # 속도
-    vol = Column(Integer)  # 교통량
-    trvlTime = Column(Integer)  # 여행 시간
-    linkDelayTime = Column(Integer)  # 링크 지연 시간
+    spd = Column(String(20))  # 속도
+    vol = Column(String(20))  # 교통량
+    trvlTime = Column(String(20))  # 여행 시간
+    linkDelayTime = Column(String(20))  # 링크 지연 시간
     congGrade = Column(String(20))  # 혼잡 등급(0:정보없음, 1:원활, 2:지체, 3:정체)
 
     def __repr__(self):
@@ -103,17 +103,17 @@ class getRoadLinkTrafficInfo(CommonBase):
     routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
-    routeSeq = Column(Integer)  # 도로 순서
+    routeSeq = Column(String(20))  # 도로 순서
     linkId = Column(String(50))  # 링크 ID
     startNodeId = Column(String(50))  # 시작 노드 ID
     startNodeNm = Column(String(100))  # 시작 노드 이름
     endNodeId = Column(String(50))  # 끝 노드 ID
     endNodeNm = Column(String(100))  # 끝 노드 이름
     collDate = Column(String(20))  # 수집 날짜
-    spd = Column(Integer)  # 속도
-    vol = Column(Integer)  # 교통량
-    trvlTime = Column(Integer)  # 여행 시간
-    linkDelayTime = Column(Integer)  # 링크 지연 시간
+    spd = Column(String(20))  # 속도
+    vol = Column(String(20))  # 교통량
+    trvlTime = Column(String(20))  # 여행 시간
+    linkDelayTime = Column(String(20))  # 링크 지연 시간
     congGrade = Column(String(20))  # 혼잡 등급(0:정보없음, 1:원활, 2:지체, 3:정체)
 
 
@@ -131,16 +131,16 @@ class getRoadLinkCongestInfo(CommonBase):
     routeId = Column(String(50))  # 도로 ID
     routeNm = Column(String(100))  # 도로 이름
     routeWay = Column(String(20))  # 도로 방향
-    routeSeq = Column(Integer)  # 도로 순서
+    routeSeq = Column(String(20))  # 도로 순서
     linkId = Column(String(50))  # 링크 ID
     startNodeId = Column(String(50))  # 시작 노드 ID
     startNodeNm = Column(String(100))  # 시작 노드 이름
     endNodeId = Column(String(50))  # 끝 노드 ID
     endNodeNm = Column(String(100))  # 끝 노드 이름
     collDate = Column(String(20))  # 수집 날짜
-    spd = Column(Integer)  # 속도
-    vol = Column(Integer)  # 교통량
-    trvlTime = Column(Integer)  # 여행 시간
+    spd = Column(String(20))  # 속도
+    vol = Column(String(20))  # 교통량
+    trvlTime = Column(String(20))  # 여행 시간
 
     def __repr__(self):
         return (f"<getRoadLinkCongestInfo(routeId={self.routeId}, routeNm={self.routeNm}, routeWay={self.routeWay}, "
@@ -155,7 +155,7 @@ class getIncidentInfo(CommonBase):
     routeId = Column(String(50))  # 도로 ID
     linkId = Column(String(50))  # 표준링크 ID
     spotId = Column(String(50))  # 지점 ID
-    regSeq  = Column(Integer)  # 돌발상황 고유번호
+    regSeq  = Column(String(20))  # 돌발상황 고유번호
     confirmDate = Column(String(20))  # 감지 시간
     startDate = Column(String(20))  # 시작 시간
     estEndDate = Column(String(20))  # 예상 종료 시간
@@ -244,8 +244,8 @@ class getParkingPlaceAvailabilityInfoList(CommonBase):
     laeNm = Column(String(50))  # 지방자치단체명
     pkplcId = Column(String(50))  # 주차장ID
     pkplcNm = Column(String(100))  # 주차장명
-    pklotCnt = Column(Integer)  # 주차구획 수
-    avblPklotCnt = Column(Integer)  # 가용 주차구획 수
+    pklotCnt = Column(String(20))  # 주차구획 수
+    avblPklotCnt = Column(String(20))  # 가용 주차구획 수
     ocrnDt = Column(String(20))  # 제공시간
 
     def __repr__(self):
