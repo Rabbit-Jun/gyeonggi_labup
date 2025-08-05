@@ -11,16 +11,6 @@ from database.repository import (
     insert_data, get_all_data, get_paginated_data, 
     get_road_traffic_info_by_route, get_parking_info_by_location
 )
-from database.schema.response import (
-    RoadInfoResponse, RoadTrafficInfoResponse, ParkingPlaceInfoResponse,
-    IncidentInfoResponse, ParkingPlaceAvailabilityInfoResponse,
-    RoadInfoPageResponse, RoadTrafficInfoPageResponse, 
-    ParkingPlaceInfoPageResponse, IncidentInfoPageResponse
-)
-from database.schema.request import (
-    RoadInfoPageRequest, RoadTrafficInfoPageRequest, 
-    ParkingPlaceInfoPageRequest, IncidentInfoPageRequest
-)
 
 load_dotenv()
 

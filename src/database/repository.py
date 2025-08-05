@@ -34,7 +34,9 @@ def insert_data(db: Session, model_name: str, data: list[dict]):
     model = MODEL_MAP[model_name]
     
     for item in data:
-        db.add(model(**item))
+        # id 필드가 있다면 제거 (auto-increment이므로)
+        clean_item = {k: v for k, v in item.items() if k != 'id'}
+        db.add(model(**clean_item))
     
     db.commit()
 
