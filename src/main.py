@@ -1,9 +1,13 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 import requests
 import os
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
+from sqlalchemy.orm import Session
+from typing import List
 import xml.etree.ElementTree as ET
+
+from database.connection import get_db
 
 load_dotenv()
 
@@ -17,6 +21,27 @@ api_key=['getRoadInfoList','getRoadLinkInfoList',
          'getRoadLinkTrafficInfo','getRoadLinkCongestInfo',
          'getIncidentInfo','getParkingPlaceInfoList',
          'getParkingPlaceAvailabilityInfoList']
+
+
+
+app = FastAPI()
+
+
+@app.get("/")
+def health_check_handler():
+    return {"ping": "pong"}
+
+
+
+@app.get(f"/{api_key[0]}", status_code=200) # status_code는 200이 기본값이라 생략 가능
+def getRoadInfoList_handler(order: str | None = None,
+                      session: Session = Depends(get_db)): # str | None = None 하면 값을 필수적으로 안 넣어도 됨
+    
+    todos: List[ToDo] = get_todos(session=session)
+
+    if order == "desc":
+        return ListToDoResponse(todos=[ToDoSchema.model_validate(todo) for todo in todos[::-1]])
+    return ListToDoResponse(todos=[ToDoSchema.model_validate(todo) for todo in todos]) # ListToDoResponse는 Pydantic 모델로, todos를 리스트로 감싸서 반환
 
 
 @app.get("/getRoadInfoList")
