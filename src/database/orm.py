@@ -178,7 +178,8 @@ class getIncidentInfo(CommonBase):
 class associatedParkingPlaceInfoList(Base):
     __tablename__ = "associated_parking_place_info_list"
 
-    laeId = Column(String(20), primary_key=True)  # 지방자치단체ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    laeId = Column(String(20), unique=True)  # 지방자치단체ID (고유하지만 primary key는 아님)
     laeNm = Column(String(50), nullable=True)  # 지방자치단체명
 
     def __repr__(self):
@@ -187,10 +188,10 @@ class associatedParkingPlaceInfoList(Base):
 class getParkingPlaceInfoList(CommonBase):
     __tablename__ = "parking_place_info_list"
 
-
-    laeId = Column(String(20), primary_key=True)  # 지방자치단체ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    laeId = Column(String(20))  # 지방자치단체ID
     laeNm = Column(String(50))  # 지방자치단체명
-    pkplcId = Column(String(50), primary_key=True)  # 주차장ID
+    pkplcId = Column(String(50), unique=True)  # 주차장ID (고유하지만 primary key는 아님)
     pkplcNm = Column(String(100))  # 주차장명
     pkplcDivNm = Column(String(50))  # 주차장 구분
     pkplcTypeNm = Column(String(50))  # 주차장 유형
@@ -238,9 +239,10 @@ class getParkingPlaceInfoList(CommonBase):
 class getParkingPlaceAvailabilityInfoList(CommonBase):
     __tablename__ = "parking_place_availability_info_list"
 
-    laeId = Column(String(20), primary_key=True)  # 지방자치단체ID
+    id = Column(Integer, primary_key=True, autoincrement=True)  # 기본 primary key 추가
+    laeId = Column(String(20))  # 지방자치단체ID
     laeNm = Column(String(50))  # 지방자치단체명
-    pkplcId = Column(String(50), primary_key=True)  # 주차장ID
+    pkplcId = Column(String(50))  # 주차장ID
     pkplcNm = Column(String(100))  # 주차장명
     pklotCnt = Column(Integer)  # 주차구획 수
     avblPklotCnt = Column(Integer)  # 가용 주차구획 수
