@@ -5,7 +5,6 @@ from database.orm import (getParkingPlaceAvailabilityInfoList, getIncidentInfo,
                           getRoadTrafficInfoList, getRoadLinkTrafficInfoList,
                           getRoadLinkTrafficInfo, getRoadLinkCongestInfo,
                           getParkingPlaceInfoList, associatedParkingPlaceInfoList)
-from typing import List
 
 
 MODEL_MAP = {
@@ -21,7 +20,7 @@ MODEL_MAP = {
     "associatedParkingPlaceInfoList": associatedParkingPlaceInfoList
 }
 
-def insert_data(db: Session, model_name: str, data: List[dict]):
+def insert_data(db: Session, model_name: str, data: list[dict]):
     """
     데이터베이스에 데이터를 삽입합니다.
     
@@ -40,7 +39,7 @@ def insert_data(db: Session, model_name: str, data: List[dict]):
     db.commit()
 
 
-def get_all_data(db: Session, model_name: str) -> List[object]:
+def get_all_data(db: Session, model_name: str) -> list[object]:
     """
     특정 모델의 모든 데이터를 조회합니다.
     
@@ -73,7 +72,7 @@ def get_data_by_id(db: Session, model_name: str, record_id: str) -> object | Non
     return db.query(model).filter(primary_key_col == record_id).first()
 
 
-def get_paginated_data(db: Session, model_name: str, page: int = 1, page_size: int = 10) -> tuple[List[object], int]:
+def get_paginated_data(db: Session, model_name: str, page: int = 1, page_size: int = 10) -> tuple[list[object], int]:
     """
     페이지네이션을 적용하여 데이터를 조회합니다.
     
@@ -115,7 +114,7 @@ def delete_all_data(db: Session, model_name: str) -> int:
     return deleted_count
 
 
-def update_or_insert_data(db: Session, model_name: str, data: List[dict]):
+def update_or_insert_data(db: Session, model_name: str, data: list[dict]):
     """
     데이터를 업데이트하거나 삽입합니다 (Upsert).
     기존 데이터가 있으면 업데이트하고, 없으면 새로 삽입합니다.
@@ -151,23 +150,23 @@ def update_or_insert_data(db: Session, model_name: str, data: List[dict]):
 
 
 # 특정 모델에 대한 전용 함수들
-def get_road_traffic_info_by_route(db: Session, route_id: str) -> List[getRoadTrafficInfoList]:
+def get_road_traffic_info_by_route(db: Session, route_id: str) -> list[getRoadTrafficInfoList]:
     """특정 도로의 교통 정보를 조회합니다."""
     return db.query(getRoadTrafficInfoList).filter(getRoadTrafficInfoList.routeId == route_id).all()
 
 
-def get_parking_info_by_location(db: Session, lae_id: str) -> List[getParkingPlaceInfoList]:
+def get_parking_info_by_location(db: Session, lae_id: str) -> list[getParkingPlaceInfoList]:
     """특정 지역의 주차장 정보를 조회합니다."""
     return db.query(getParkingPlaceInfoList).filter(getParkingPlaceInfoList.laeId == lae_id).all()
 
 
-def get_available_parking_spaces(db: Session, min_spaces: int = 1) -> List[getParkingPlaceAvailabilityInfoList]:
+def get_available_parking_spaces(db: Session, min_spaces: int = 1) -> list[getParkingPlaceAvailabilityInfoList]:
     """이용 가능한 주차 공간이 있는 주차장을 조회합니다."""
     return db.query(getParkingPlaceAvailabilityInfoList).filter(
         getParkingPlaceAvailabilityInfoList.avblPklotCnt >= min_spaces
     ).all()
 
 
-def get_active_incidents(db: Session) -> List[getIncidentInfo]:
+def get_active_incidents(db: Session) -> list[getIncidentInfo]:
     """진행 중인 돌발상황을 조회합니다."""
     return db.query(getIncidentInfo).filter(getIncidentInfo.endDate.is_(None)).all()
